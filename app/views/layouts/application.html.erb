@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BrivityMessageBoard</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,8 +13,41 @@
   </head>
 
   <body>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <%= link_to "Home", :root, class: "blog-nav-item #{'active' if current_page? :root}" %>
+          <% if current_user %>
+            <%= link_to "Sign Out", %i[destroy user session], method: :delete, class: "blog-nav-item" %>
+            <%= link_to "Edit Account", %i[edit user registration], class: "blog-nav-item #{ 'active' if current_page? %i[new user registration] }" %>
+          <% else %>
+            <%= link_to "Sign In", %i[new user session], class: "blog-nav-item #{ 'active' if current_page? %i[new user session] }" %>
+            <%= link_to "Register", %i[new user registration], class: "blog-nav-item #{ 'active' if current_page? %i[new user registration] }" %>
+          <% end %>
+        </nav>
+      </div>
+    </div>
+    <div class="container">
+      <% if notice || alert %>
+        <div class="row">
+          <% if notice %> 
+          <div class="col-xs-12">
+            <div class="alert alert-info">
+                <%= notice %>
+              </div>
+            </div> 
+          <% end %>
+          <% if alert %> 
+            <div class="col-xs-12">
+              <div class="alert alert-info">
+                <%= alert %>
+              </div>
+            </div> 
+          <% end %>
+        </div>
+      <% end %>
+      
+      <%= yield %>
+    </div>
   </body>
 </html>

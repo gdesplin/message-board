@@ -1,2 +1,8 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<div class="container">
+  <div class="blog-post">
+    <h2 class="blog-header"><%= @post.title %></h2>
+    <p class="blog-post-meta"><%= @post.created_at.strftime("%m/%d/%Y") %> by <%= @post.user.name %></p>
+    <p><%= @post.body %></p>
+    <%= link_to "Back to posts", :posts %>
+  </div>
+</div>

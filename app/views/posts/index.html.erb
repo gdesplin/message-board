@@ -1,2 +1,29 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-header">Posts <%= link_to "Create New Post", %i[new post], class: "btn btn-primary" %></h1>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 blog-main">
+      <% if @posts.blank? %>
+        <div class="alert alert-info">
+            There are no <%= Post.model_name.human.downcase.pluralize %> to display.
+          </div>
+        </div> 
+      <% end%>
+      
+      <% @posts.each do |post| %>
+        <div class="blog-post">
+          <h2 class="blog-post-title"><%= post.title %></h2>
+          <p class="blog-post-meta"><%= post.created_at.strftime("%m/%d/%Y") %> by <%= post.user.name %></p>
+          <p><%= post.body.truncate(160, separator: ' ') %></p>
+          <%= link_to "Read more", post %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+
+</div>
+

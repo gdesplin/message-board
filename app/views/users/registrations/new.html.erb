@@ -1,0 +1,9 @@
+<div class="container">
+  <h2>Sign up</h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render partial: "form", locals: { f: f, resource: resource, resource_name: resource_name } %>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+</div>
