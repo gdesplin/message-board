@@ -13,17 +13,16 @@
       <% end%>
       
       <% @posts.each do |post| %>
-        <div class="blog-post">
-          <h2 class="blog-post-title"><%= post.title %></h2>
-          <p class="blog-post-meta"><%= post.created_at.strftime("%m/%d/%Y") %> by <%= post.user.name %></p>
-          <p><%= post.body.truncate(160, separator: ' ') %></p>
-          <%= link_to "Read more", post %>
+        <div class="blog-post panel panel-primary">
+          <h2 class="blog-post-title panel-heading"><%= post.title %></h2>
+          <div class="panel-body">
+            <p class="blog-post-meta"><small><%= post.created_at.strftime("%_m/%d/%Y") %> by <%= post.user.name %></small></p>
+            <p><%= post.body.truncate(160, separator: ' ') %></p>
+            <%= link_to "Read more", post %>
+          </div>
         </div>
       <% end %>
     </div>
-
   </div>
 
-
 </div>
-
