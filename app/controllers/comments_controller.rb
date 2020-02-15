@@ -32,7 +32,6 @@ class CommentsController < ApplicationController
     return true if @comment.user == current_user
 
     flash.alert = "You're unauthorized to do that."
-    redirect_to :root && return
+    redirect_to :root, status: :unauthorized && return
   end
-
 end

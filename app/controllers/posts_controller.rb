@@ -64,7 +64,6 @@ class PostsController < ApplicationController
     return true if @post.user == current_user
 
     flash.alert = "You're unauthorized to do that."
-    redirect_to :root && return
+    redirect_to :root, status: :unauthorized && return
   end
-
 end

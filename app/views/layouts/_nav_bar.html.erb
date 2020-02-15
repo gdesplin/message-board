@@ -1,14 +1,19 @@
 <div class="blog-masthead">
   <div class="container">
     <nav class="blog-nav">
-      <%= link_to "Home", :root, class: "blog-nav-item #{'active' if current_page? :root}" %>
-      <% if current_user %>
-        <%= link_to "Sign Out", %i[destroy user session], method: :delete, class: "blog-nav-item" %>
+      <ul class="nav navbar-nav navbar-left">
+      
+        <%= link_to "Home", :root, class: "blog-nav-item #{'active' if current_page? :root}" %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if current_user %>
         <%= link_to "Edit Account", %i[edit user registration], class: "blog-nav-item #{ 'active' if current_page? %i[new user registration] }" %>
-      <% else %>
-        <%= link_to "Sign In", %i[new user session], class: "blog-nav-item #{ 'active' if current_page? %i[new user session] }" %>
+        <%= link_to "Sign Out", %i[destroy user session], method: :delete, class: "blog-nav-item" %>
+        <% else %>
         <%= link_to "Register", %i[new user registration], class: "blog-nav-item #{ 'active' if current_page? %i[new user registration] }" %>
-      <% end %>
+        <%= link_to "Sign In", %i[new user session], class: "blog-nav-item #{ 'active' if current_page? %i[new user session] }" %>
+        <% end %>
+      </ul>
     </nav>
   </div>
 </div>
