@@ -13,39 +13,24 @@
   </head>
 
   <body>
-    <div class="blog-masthead">
-      <div class="container">
-        <nav class="blog-nav">
-          <%= link_to "Home", :root, class: "blog-nav-item #{'active' if current_page? :root}" %>
-          <% if current_user %>
-            <%= link_to "Sign Out", %i[destroy user session], method: :delete, class: "blog-nav-item" %>
-            <%= link_to "Edit Account", %i[edit user registration], class: "blog-nav-item #{ 'active' if current_page? %i[new user registration] }" %>
-          <% else %>
-            <%= link_to "Sign In", %i[new user session], class: "blog-nav-item #{ 'active' if current_page? %i[new user session] }" %>
-            <%= link_to "Register", %i[new user registration], class: "blog-nav-item #{ 'active' if current_page? %i[new user registration] }" %>
-          <% end %>
-        </nav>
-      </div>
-    </div>
+    <%= render partial: "layouts/nav_bar" %>
     <div class="container">
-      <% if notice || alert %>
-        <div class="row">
-          <% if notice %> 
+      <div class="row mb-3">
+        <% if notice %> 
+        <div class="col-xs-12">
+          <div class="alert alert-info">
+              <%= notice %>
+            </div>
+          </div> 
+        <% end %>
+        <% if alert %> 
           <div class="col-xs-12">
-            <div class="alert alert-info">
-                <%= notice %>
-              </div>
-            </div> 
-          <% end %>
-          <% if alert %> 
-            <div class="col-xs-12">
-              <div class="alert alert-info">
-                <%= alert %>
-              </div>
-            </div> 
-          <% end %>
-        </div>
-      <% end %>
+            <div class="alert alert-warning">
+              <%= alert %>
+            </div>
+          </div> 
+        <% end %>
+      </div>
       
       <%= yield %>
     </div>

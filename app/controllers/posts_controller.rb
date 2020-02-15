@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :user_signed_in?, except: :index
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.all.ordered
   end
 
   def show
@@ -17,8 +17,10 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.create(safe_params)
     if @post.save
+      flash.notice = "Post created."
       redirect_to @post
     else
+      flash.now.alert = "Error count: #{@post.errors.size}, see below."
       render :new
     end
   end
@@ -26,7 +28,13 @@ class PostsController < ApplicationController
   def update
     @post = current_user.posts.find(params[:id])
     authorize_user
-    @post.update(safe_params)
+    if @post.update(safe_params)
+      flash.notice = "Post updated."
+      redirect_to @post
+    else
+      flash.now.alert = "Error count: #{@post.errors.size}, see below."
+      render :edit
+    end
   end
 
   def edit
@@ -37,7 +45,13 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     authorize_user
-    @post.destroy
+    if @post.destroy
+      flash.notice = "Post deleted."
+      redirect_to :root
+    else
+      flash.now.alert = @post.errors.full_messages
+      render :edit
+    end
   end
 
   private
@@ -49,7 +63,7 @@ class PostsController < ApplicationController
   def authorize_user
     return true if @post.user == current_user
 
-    flash.alert= "You're unauthorized to do that."
+    flash.alert = "You're unauthorized to do that."
     redirect_to :root
   end
 
