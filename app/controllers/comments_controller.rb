@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-
   before_action :user_signed_in?
 
   def create
@@ -13,7 +12,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment = current_user.comments.find(params[:id])
+    @comment = Comment.find(params[:id])
     authorize_user
     if @comment.update(safe_params)
       flash.notice = "Comment updated."
@@ -21,12 +20,6 @@ class CommentsController < ApplicationController
       flash.alert = @comment.errors.full_messages.join(", ")
     end
     redirect_to @comment.post
-  end
-
-  def destroy
-    @comment = current_user.comments.find(params[:id])
-    authorize_user
-    @comment.destroy
   end
 
   private
@@ -38,8 +31,8 @@ class CommentsController < ApplicationController
   def authorize_user
     return true if @comment.user == current_user
 
-    flash.alert= "You're unauthorized to do that."
-    redirect_to :root
+    flash.alert = "You're unauthorized to do that."
+    redirect_to :root && return
   end
 
 end

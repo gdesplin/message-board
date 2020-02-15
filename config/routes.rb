@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :posts
-  resources :comments, except: :index
+  resources :comments, only: %i[create update]
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'

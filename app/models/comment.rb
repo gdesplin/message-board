@@ -7,7 +7,7 @@ class Comment < ApplicationRecord
   validates :user_id, presence: true
   validates :post_id, presence: true
 
-  scope :ordered, -> { order(created_at: :desc) }
+  scope :ordered, -> { order(created_at: :asc) }
 
 
 end

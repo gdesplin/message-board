@@ -26,7 +26,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = current_user.posts.find(params[:id])
+    @post = Post.find(params[:id])
     authorize_user
     if @post.update(safe_params)
       flash.notice = "Post updated."
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = current_user.posts.find(params[:id])
+    @post = Post.find(params[:id])
     authorize_user
   end
 
@@ -64,7 +64,7 @@ class PostsController < ApplicationController
     return true if @post.user == current_user
 
     flash.alert = "You're unauthorized to do that."
-    redirect_to :root
+    redirect_to :root && return
   end
 
 end
