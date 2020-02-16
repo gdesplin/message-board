@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
-
-  before_action :user_signed_in?, except: :index
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
     @posts = Post.all.ordered
@@ -27,7 +26,8 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    authorize_user
+    return unless authorize_user
+
     if @post.update(safe_params)
       flash.notice = "Post updated."
       redirect_to @post
@@ -39,12 +39,13 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    authorize_user
+    return unless authorize_user
   end
 
   def destroy
     @post = Post.find(params[:id])
-    authorize_user
+    return unless authorize_user
+
     if @post.destroy
       flash.notice = "Post deleted."
       redirect_to :root
@@ -64,6 +65,6 @@ class PostsController < ApplicationController
     return true if @post.user == current_user
 
     flash.alert = "You're unauthorized to do that."
-    redirect_to :root, status: :unauthorized && return
+    redirect_to :root and return
   end
 end

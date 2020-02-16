@@ -1,9 +1,9 @@
 <div class="blog-header">
   <h1 class="blog-header">
-    Posts <%= link_to "Create New Post", %i[new post], class: "btn btn-primary", disabled: !current_user%>
+    Posts <%= button_to "Create New Post", %i[new post], method: :get, class: "btn btn-primary", disabled: !current_user%>
   </h1>
   <% if !current_user %>
-    <span id="helpBlock2" class="help-block">You must be <%= link_to "signed in", %i[new user session] %> or
+    <span id="helpBlock2" class="help-block">You must <%= link_to "sign in", %i[new user session] %> or
       <%= link_to "register", %i[new user registration] %> to <%= Post.model_name.human.downcase %>. </span>
   <% end %>
 </div>
@@ -21,7 +21,12 @@
       <div class="blog-post panel panel-primary">
         <h2 class="blog-post-title panel-heading"><%= post.title %></h2>
         <div class="panel-body">
-          <p class="blog-post-meta"><small><%= post.created_at.strftime("%_m/%d/%Y") %> by <%= post.user.name %></small></p>
+          <p class="blog-post-meta">
+            <small>
+              <%= post.created_at.strftime("%_m/%d/%Y") %> 
+                by <%= post.user.name.presence || post.user.email %>
+            </small>
+          </p>
           <p><%= post.body.truncate(160, separator: ' ') %></p>
           <%= link_to "Read more", post %>
         </div>

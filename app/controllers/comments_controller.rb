@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :user_signed_in?
+  before_action :authenticate_user!
 
   def create
     @comment = Comment.new(safe_params.merge(user_id: current_user.id))
@@ -13,7 +13,8 @@ class CommentsController < ApplicationController
 
   def update
     @comment = Comment.find(params[:id])
-    authorize_user
+    return unless authorize_user
+
     if @comment.update(safe_params)
       flash.notice = "Comment updated."
     else
@@ -32,6 +33,6 @@ class CommentsController < ApplicationController
     return true if @comment.user == current_user
 
     flash.alert = "You're unauthorized to do that."
-    redirect_to :root, status: :unauthorized && return
+    redirect_to :root and return
   end
 end

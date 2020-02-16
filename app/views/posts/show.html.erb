@@ -1,7 +1,7 @@
 <div class="blog-post blog-post panel panel-primary">
   <h2 class="blog-header panel-heading"><%= @post.title %></h2>
   <div class="panel-body">
-    <p class="blog-post-meta"><small><%= @post.created_at.strftime("%_m/%d/%Y") %> by <%= @post.user.name %></small></p>
+    <p class="blog-post-meta"><small><%= @post.created_at.strftime("%_m/%d/%Y") %> by <%= @post.user.name.presence || @post.user.email  %></small></p>
     <p><%= @post.body %></p>
     <p>
       <%= link_to "Edit post", [:edit, @post] if current_user == @post.user %>
@@ -12,8 +12,8 @@
 <div>
   <%= button_tag "Reply", class: "btn btn-primary mb-3", data: { toggle: "modal", target: "#newCommentModal" }, disabled: !current_user %>
   <% if !current_user %>
-    <span id="helpBlock2" class="help-block">You must be <%= link_to "signed in", %i[new user session] %> or
-      <%= link_to "register", %i[new user registration] %> to <%= Comment.model_name.human.downcase %>. </span>
+    <span id="helpBlock2" class="help-block">You must <%= link_to "sign in", %i[new user session] %> or
+      <%= link_to "sign in", %i[new user registration] %> to <%= Comment.model_name.human.downcase %>. </span>
   <% end %>
   <h2>Comments</h2>
   <% if @post.comments.blank? %>
@@ -26,7 +26,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <%= comment.user.name %>
+          <%= comment.user.name.presence || comment.user.email %>
           <small>
             <%= comment.created_at.strftime("%_m/%d/%Y %l:%M %p") %>
             <% if comment.created_at != comment.updated_at %>
